@@ -18,11 +18,11 @@
         .container {
             display: flex;
             align-items: flex-start;
-            max-width: 1100px;
-            gap: 100px; /* Increased gap to create more space between funnel and right column */
+            max-width: 1400px; /* 增加宽度，从1100px调整到1400px */
+            gap: 120px; /* 略微增加间距，从100px调整到120px */
         }
         .funnel-container {
-            width: 600px;
+            width: 800px; /* 增加宽度，从600px调整到800px */
             flex-shrink: 0;
         }
         .funnel-step {
@@ -119,7 +119,7 @@
 
         /* --- 右侧团队信息列容器 --- */
         .right-column-wrapper {
-            width: 320px;
+            width: 400px; /* 增加宽度，从320px调整到400px */
             flex-shrink: 0;
             padding-top: 10px;
         }
@@ -138,21 +138,18 @@
         /* --- 第一个团队信息块 (对齐 Step 1) --- */
         .step1-teams {
              margin-bottom: 80px; /* 控制块1和块2的间距，对齐块2到Step2 */
-                                  /* 可能需要根据实际效果调整 */
         }
 
         /* --- 第二个团队信息块 (对齐 Step 2) --- */
         .step2-teams {
-             /* 这是关键：调整这个值来控制第三个块的起始位置 */
-             /* 需要估算 Step 2/3 + Arrow 的高度 */
-             margin-bottom: 180px; /* <<<<<< 估算值，请根据实际效果调整 >>>>>> */
+             margin-bottom: 180px; /* 保持不变 */
         }
 
         /* --- 通用团队信息块的箭头 --- */
         .team-details::before {
             content: '⇐';
             position: absolute;
-            top: 25px; /* 箭头距离其容器顶部的距离 */
+            top: 25px;
             left: 0px;
             transform: translateX(-120%);
             font-size: 36px;
@@ -189,15 +186,15 @@
 <body>
     <div class="container">
         <div class="funnel-container">
-            <div class="funnel-step step-1"> <div class="step-title"> <div class="step-number">1</div> <h3>数据提取</h3> </div> <p>收集反馈工单与邮件</p> <p class="data-scale">团队大致数量级：30000 条/月</p> </div>
+            <div class="funnel-step step-1"> <div class="step-title"> <div class="step-number">1</div> <h3>数据提取</h3> </div> <p>外部视角收集反馈工单与邮件</p> <p class="data-scale">团队大致数量级：45323条/月（应用商店+后台+邮箱）</p> </div>
             <div class="arrow"></div>
             <div class="funnel-step step-2"> <div class="step-title"> <div class="step-number">2</div> <h3>报告提炼</h3> </div> <p>数据清洗、提炼出关键洞察。数量减少，信息价值提升</p> <p class="data-scale">产出分类统计、趋势图、高频问题警报、可改进需求</p> </div>
             <div class="arrow"></div>
-            <div class="funnel-step step-3"> <div class="step-title"> <div class="step-number">3</div> <h3>报告分享</h3> </div> <p>分发结构化报告</p> <p class="data-scale">信息传递动作，提炼有效需求≥5条</p> </div>
+            <div class="funnel-step step-3"> <div class="step-title"> <div class="step-number">3</div> <h3>报告分享</h3> </div> <p>以责任团队分发结构化报告</p> <p class="data-scale">信息传递动作，确保上下游有效获取信息</p> </div>
             <div class="arrow"></div>
-            <div class="funnel-step step-4"> <div class="step-title"> <div class="step-number">4</div> <h3>确定需求</h3> </div> <p>评估筛选，确认需求</p> <p class="data-scale">信息再次聚焦，推动至少3条进入需求池</p> </div>
+            <div class="funnel-step step-4"> <div class="step-title"> <div class="step-number">4</div> <h3>确定需求</h3> </div> <p>协助责任团队评估问题</p> <p class="data-scale">信息再次聚焦，推动问题清单解决</p> </div>
             <div class="arrow"></div>
-            <div class="funnel-step step-5"> <div class="step-title"> <div class="step-number">5</div> <h3>行事历制定</h3> </div> <p>优先级排序，制定任务</p> <p class="data-scale">立项关键改进任务</p> </div>
+            <div class="funnel-step step-5"> <div class="step-title"> <div class="step-number">5</div> <h3>行事历制定</h3> </div> <p>优先级排序，制定跟进任务</p> <p class="data-scale"> 责任到人按周/月跟进方案进展</p> </div>
             <div class="arrow"></div>
             <div class="funnel-step step-6"> <div class="step-title"> <div class="step-number">6</div> <h3>用户反馈</h3> </div> <p>执行任务，验证效果</p> <p class="data-scale">需求上线后， 如有需求，可提交用户体验分析报告</p> </div>
         </div>
