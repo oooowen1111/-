@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funnel Process Chart with Multiple Team Details</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #ffffff;
+            padding: 40px;
+        }
+        .container {
+            display: flex;
+            align-items: flex-start;
+            max-width: 1100px;
+            gap: 100px; /* Increased gap to create more space between funnel and right column */
+        }
+        .funnel-container {
+            width: 600px;
+            flex-shrink: 0;
+        }
+        .funnel-step {
+            position: relative;
+            margin: 30px auto;
+            background: #ffffff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+            text-align: center;
+            z-index: 1;
+        }
+        .funnel-step:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .step-1 { width: 100%; background-color: #eff6ff; }
+        .step-2 { width: 90%; background-color: #dbeafe; }
+        .step-3 { width: 80%; background-color: #bfdbfe; }
+        .step-4 { width: 70%; background-color: #93c5fd; }
+        .step-5 { width: 60%; background-color: #60a5fa; color: #fff;}
+        .step-6 { width: 50%; background-color: #3b82f6; color: #fff;}
+
+        .arrow {
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            margin: 20px auto;
+            z-index: 0;
+            border-top: 14px solid #60a5fa;
+        }
+
+        .step-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background-color: #3b82f6;
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+            font-size: 18px;
+        }
+        .step-5 .step-number,
+        .step-6 .step-number {
+             background-color: #fff;
+             color: #3b82f6;
+        }
+
+        h3 {
+            margin: 0;
+            font-size: 24px;
+            color: #1e3a8a;
+        }
+        .step-5 h3,
+        .step-6 h3 {
+             color: #fff;
+        }
+
+        p {
+            margin: 8px 0;
+            font-size: 18px;
+            color: #3b82f6;
+            line-height: 1.6;
+        }
+        .step-5 p,
+        .step-6 p {
+             color: #dbeafe;
+        }
+
+        .data-scale {
+            font-weight: 600;
+            color: #1e3a8a;
+            margin-top: 10px;
+            font-size: 17px;
+        }
+        .step-5 .data-scale,
+        .step-6 .data-scale {
+             color: #eff6ff;
+        }
+
+        /* --- 右侧团队信息列容器 --- */
+        .right-column-wrapper {
+            width: 320px;
+            flex-shrink: 0;
+            padding-top: 10px;
+        }
+
+        /* --- 通用团队信息块样式 --- */
+        .team-details {
+            width: 100%;
+            padding: 20px;
+            position: relative;
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+        }
+
+        /* --- 第一个团队信息块 (对齐 Step 1) --- */
+        .step1-teams {
+             margin-bottom: 80px; /* 控制块1和块2的间距，对齐块2到Step2 */
+                                  /* 可能需要根据实际效果调整 */
+        }
+
+        /* --- 第二个团队信息块 (对齐 Step 2) --- */
+        .step2-teams {
+             /* 这是关键：调整这个值来控制第三个块的起始位置 */
+             /* 需要估算 Step 2/3 + Arrow 的高度 */
+             margin-bottom: 180px; /* <<<<<< 估算值，请根据实际效果调整 >>>>>> */
+        }
+
+        /* --- 通用团队信息块的箭头 --- */
+        .team-details::before {
+            content: '⇐';
+            position: absolute;
+            top: 25px; /* 箭头距离其容器顶部的距离 */
+            left: 0px;
+            transform: translateX(-120%);
+            font-size: 36px;
+            color: #60a5fa;
+            line-height: 1;
+            font-weight: bold;
+        }
+
+        .team-arrow {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+        .team-arrow:last-child {
+             margin-bottom: 0;
+        }
+
+        .team-label {
+            font-size: 15px;
+            color: #4b5563;
+            text-align: left;
+            line-height: 1.7;
+        }
+        .team-label span {
+            font-weight: bold;
+            font-size: 16px;
+            color: #1f2937;
+            margin-bottom: 5px;
+            display: inline-block;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="funnel-container">
+            <div class="funnel-step step-1"> <div class="step-title"> <div class="step-number">1</div> <h3>数据提取</h3> </div> <p>收集反馈工单与邮件</p> <p class="data-scale">团队大致数量级：30000 条/月</p> </div>
+            <div class="arrow"></div>
+            <div class="funnel-step step-2"> <div class="step-title"> <div class="step-number">2</div> <h3>报告提炼</h3> </div> <p>数据清洗、提炼出关键洞察。数量减少，信息价值提升</p> <p class="data-scale">产出分类统计、趋势图、高频问题警报、可改进需求</p> </div>
+            <div class="arrow"></div>
+            <div class="funnel-step step-3"> <div class="step-title"> <div class="step-number">3</div> <h3>报告分享</h3> </div> <p>分发结构化报告</p> <p class="data-scale">信息传递动作，提炼有效需求≥5条</p> </div>
+            <div class="arrow"></div>
+            <div class="funnel-step step-4"> <div class="step-title"> <div class="step-number">4</div> <h3>确定需求</h3> </div> <p>评估筛选，确认需求</p> <p class="data-scale">信息再次聚焦，推动至少3条需求进入产品需求池</p> </div>
+            <div class="arrow"></div>
+            <div class="funnel-step step-5"> <div class="step-title"> <div class="step-number">5</div> <h3>行事历制定</h3> </div> <p>优先级排序，制定任务</p> <p class="data-scale">立项关键改进任务</p> </div>
+            <div class="arrow"></div>
+            <div class="funnel-step step-6"> <div class="step-title"> <div class="step-number">6</div> <h3>用户反馈</h3> </div> <p>执行任务，验证效果</p> <p class="data-scale">需求上线后，如有需求，可提交用户体验分析报告</p> </div>
+        </div>
+
+        <div class="right-column-wrapper">
+            <div class="team-details step1-teams">
+              <div class="team-arrow"> <div class="team-label"> <span>数据提取侧重点 </div> </div> 
+                 <div class="team-arrow"> <div class="team-label"> <span>产品团队：</span><br> 功能 Bug 类、用户体验类、<br> 支付/交易类、新需求/改进建议类 </div> </div>
+                 <div class="team-arrow"> <div class="team-label"> <span>内安团队：</span><br> 账号封禁/处罚申诉类、<br> 内容举报处理不满类、滥用/作弊行为线索类 </div> </div>
+                 <div class="team-arrow"> <div class="team-label"> <span>运营团队：</span><br> 活动相关类、内容生态与推荐类、<br> 社区氛围与互动类、区域性问题反馈 </div> </div>
+                 <div class="team-arrow"> <div class="team-label"> <span>IA 团队：</span><br> 虚拟货币、虚拟物品、账号资产、<br> 资产安全与欺诈类 </div> </div>
+            </div>
+
+            <div class="team-details step2-teams">
+              <div class="team-arrow"> <div class="team-label"> <span>报告侧重点 </div> </div> 
+                 <div class="team-arrow"> <div class="team-label"> <span>产品团队：</span><br> 客诉问题分析背景、功能改进建议、新功能需求建议 </div> </div>
+                 <div class="team-arrow"> <div class="team-label"> <span>内安团队：</span><br> 封禁趋势分析、封禁策略优化、用户教育、申诉流程优化 </div> </div>
+                 <div class="team-arrow"> <div class="team-label"> <span>运营团队：</span><br> 重点活动复盘支持、社区互动与氛围问题、区域运营差异洞察 </div> </div>
+                 <div class="team-arrow"> <div class="team-label"> <span>IA 团队：</span><br> 资产类 Bug 与流程问题汇总、高发资产问题分析 </div> </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
